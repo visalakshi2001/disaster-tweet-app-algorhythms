@@ -5,7 +5,7 @@ from fetchtweets import fetch_tweets
 from annotated_text import annotated_text
 
 from embedtweet import Tweet
-# t = Tweet("https://twitter.com/OReillyMedia/status/901048172738482176").component()
+# t = Tweet("https://twitter.com/OReillyMedia/status/901048172738482176").component()   
 
 def main_page(input_dict):
 
