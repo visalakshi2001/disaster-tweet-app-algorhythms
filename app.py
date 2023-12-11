@@ -42,7 +42,7 @@ def main_page(input_dict):
                             annotated_text((classif["status"], str(classif["conf"]), "#BF565A"))
                             on_tweets.append([tweet, classif, loc_info])
 
-                        annotated_text((loc_info, "", "#FFD700"))
+                        annotated_text((loc_info, "", "#50C878"))
 
                     with col2:
                         st.subheader("Tweet")
@@ -70,13 +70,13 @@ def sidebar_page():
         number = st.number_input("Number of tweets to fetch", min_value=10, max_value=100)
         location = st.text_input("Location of the tweet")
 
-        include_date = st.checkbox("Include date range",)
-        if include_date:
-            since = st.date_input("Tweet since:", value="today")
-            until = st.date_input("Tweet until:", value="today")
-        else:
-            since = None
-            until = None
+        # include_date = st.checkbox("Include date range",)
+        # if include_date:
+        #     since = st.date_input("Tweet since:", value="today")
+        #     until = st.date_input("Tweet until:", value="today")
+        # else:
+        #     since = None
+        #     until = None
 
         user_mention = st.text_input("User Mentions (if any)")
         btn = st.button("Search")
@@ -88,7 +88,7 @@ def sidebar_page():
 
 
             return {"keyword": keyword, "number": number, "mode": mode, "near": location,
-                    "since": since, "until": until, "to": user_mention}
+                    "since": None, "until": None, "to": user_mention}
         
 
 
