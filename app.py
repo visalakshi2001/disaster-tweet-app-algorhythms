@@ -7,9 +7,6 @@ from annotated_text import annotated_text
 from embedtweet import Tweet
 # t = Tweet("https://twitter.com/OReillyMedia/status/901048172738482176").component()
 
-
-st.set_page_config(page_title="Disaster Tweet Management")
-
 def main_page(input_dict):
 
     st.markdown("<center><h1>🕊️ Tweet Analytics for Disaster & Calamity Management</h1></center>", unsafe_allow_html=True)
@@ -73,6 +70,7 @@ def sidebar_page():
             return {"keyword": keyword, "number": number, "mode": mode, "near": location,
                     "since": since, "until": until, "to": user_mention}
         
+
 
 
 if __name__ == "__main__":
