@@ -1,6 +1,6 @@
 import ntscraper
 import streamlit as st
-
+import spacy
 
 @st.cache_resource
 def tweet_object(skip_check=False):
@@ -25,9 +25,17 @@ def fetch_tweets(keyword, mode, number, near=None, exclude=None, filters=None, t
         st.write("Retry request")
         print(e)
 
-    # print(keyword, mode, number, to, near, since, until)
-
     return tweet_dict
 
-def get_location():
-    pass
+def get_location(tweet_text):
+    
+    nlp = spacy.load("en_core_web_sm")
+
+    doc = nlp(tweet_text)
+
+    gpe_entities = [ent.text for ent in doc.ents if ent.label_ == "GPE"]
+
+    if gpe_entities or gpe_entities != []:
+        return ", ".join(gpe_entities)
+    else:
+        return "No location found"

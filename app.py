@@ -1,11 +1,14 @@
 import streamlit as st
 from datetime import datetime
 from classification_script import classify_tweets
-from fetchtweets import fetch_tweets
+from fetchtweets import fetch_tweets, get_location
 from annotated_text import annotated_text
 
 from embedtweet import Tweet
 # t = Tweet("https://twitter.com/OReillyMedia/status/901048172738482176").component()   
+
+st.set_page_config(page_title="Disaster Tweets Management",
+                   page_icon="🕊️", layout="wide")
 
 def main_page(input_dict):
 
@@ -16,7 +19,6 @@ def main_page(input_dict):
 
         if tweets_dict["tweets"] != []:
             tweets = tweets_dict["tweets"]
-            # st.write(tweets)    
             for tweet in tweets:
 
                 with st.container(border=True):
@@ -25,6 +27,15 @@ def main_page(input_dict):
                     with col1:
                         st.subheader("User")
                         st.write(tweet["user"]["name"])
+                        classif = classify_tweets(tweet["text"])
+                        if classif["status"] == "On-topic":
+                            annotated_text((classif["status"], str(classif["conf"]), "#4DD0E1"))
+                        else:
+                            annotated_text((classif["status"], str(classif["conf"]), "#BF565A"))
+                        
+                        loc_info = get_location(tweet["text"])
+
+                        annotated_text((loc_info, "", "#FFD700"))
 
                     with col2:
                         st.subheader("Tweet")
@@ -35,7 +46,6 @@ def main_page(input_dict):
                         st.write(tweet["link"])
         else:
             st.write("Empty list returned, change parameters and retry")
-    # annotated_text(("Fake", ".", "#DC143C"))
 
 
 def sidebar_page():
@@ -76,4 +86,6 @@ def sidebar_page():
 if __name__ == "__main__":
 
     input_dict = sidebar_page()
-    main_page(input_dict)
+
+    if input_dict != {} or input_dict != None:
+        main_page(input_dict)

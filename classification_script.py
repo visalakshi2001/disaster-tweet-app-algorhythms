@@ -34,4 +34,16 @@ def classify_tweets(tweet_text):
 
     result = model.predict(encoded)
 
-    return result
+    if result[0][0] >= 0.95:
+        return {"status": "On-topic", "conf": result[0][0]}
+    else:
+        return {"status": "Off-topic", "conf": result[0][0]}
+
+if __name__ == "__main__":
+
+    model = load_classifier()
+
+
+    print(classify_tweets("❌BREAKING❌ Unbelievable footage emerges of a mini hurricane in Leitrim today 😳 Thankfully no reports of injuries, but plenty of damage 😯 Follow us for more videos and share 🔄 #tornado #hurricane #leitrim"))
+    print(classify_tweets("Get ready to rock ‘n’ roll with the fierce energy of “Hurricane”! This song will blow you away like a storm, leaving you craving more. Listen now at: https://bluillusionmusic.com/hurricane/ #rocknrollhurricane #hurricane #partywithhurricane #goodtimesrock #rockallnight #bluillusionmusic"))
+    print(classify_tweets("With such an active hurricane season this year, I thought it appropriate to review what can happen if you are cruising during hurricane season. #cruise #cruisetips #hurricane #Caribbean https://sunhatsandchardonnay.com/hurricane-season-cruising-things-to-know/"))
