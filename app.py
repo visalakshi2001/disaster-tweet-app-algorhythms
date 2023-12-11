@@ -14,6 +14,10 @@ def main_page(input_dict):
 
     st.markdown("<center><h1>🕊️ Tweet Analytics for Disaster & Calamity Management</h1></center>", unsafe_allow_html=True)
 
+    off_tab, on_tab = st.tabs(["On-topic", "Off-topic"])
+
+    
+
     if input_dict:
         tweets_dict = fetch_tweets(**input_dict)
 
