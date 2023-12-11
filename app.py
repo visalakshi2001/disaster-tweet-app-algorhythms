@@ -14,16 +14,19 @@ def main_page(input_dict):
 
     st.markdown("<center><h1>🕊️ Tweet Analytics for Disaster & Calamity Management</h1></center>", unsafe_allow_html=True)
 
-    off_tab, on_tab = st.tabs(["On-topic", "Off-topic"])
+    # alltabs, off_tab, on_tab = st.tabs(["All tweets", "On-topic", "Off-topic"])
 
-    
+    off_tweets = []
+    on_tweets = []
 
     if input_dict:
         tweets_dict = fetch_tweets(**input_dict)
 
+        # with alltabs:
         if tweets_dict["tweets"] != []:
             tweets = tweets_dict["tweets"]
             for tweet in tweets:
+                loc_info = get_location(tweet["text"])
 
                 with st.container(border=True):
                     col1, col2, col3 = st.columns(3)
@@ -34,10 +37,10 @@ def main_page(input_dict):
                         classif = classify_tweets(tweet["text"])
                         if classif["status"] == "On-topic":
                             annotated_text((classif["status"], str(classif["conf"]), "#4DD0E1"))
+                            on_tweets.append([tweet, classif, loc_info])
                         else:
                             annotated_text((classif["status"], str(classif["conf"]), "#BF565A"))
-                        
-                        loc_info = get_location(tweet["text"])
+                            on_tweets.append([tweet, classif, loc_info])
 
                         annotated_text((loc_info, "", "#FFD700"))
 
@@ -50,6 +53,9 @@ def main_page(input_dict):
                         st.write(tweet["link"])
         else:
             st.write("Empty list returned, change parameters and retry")
+        
+        # with offtab:
+        # with ontab:
 
 
 def sidebar_page():
